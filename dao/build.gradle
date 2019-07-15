@@ -1,0 +1,37 @@
+plugins {
+    id 'java'
+}
+
+dependencies {
+    implementation project (":pojo")
+//    testImplementation 'org.springframework.security:spring-security-test'
+    implementation ("org.springframework.boot:spring-boot-starter-jdbc"){
+        transitive = true
+    }
+    implementation ("org.springframework.boot:spring-boot-starter-data-redis-reactive:${SPRING_BOOT_VERSION}"){
+        transitive = true
+    }
+//    //先禁用掉security
+//    //implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation ("org.springframework.boot:spring-boot-starter-web:${SPRING_BOOT_VERSION}"){
+        transitive = true
+    }
+    implementation ("org.mybatis.spring.boot:mybatis-spring-boot-starter:${MYBATIS_SPRING_BOOT}"){
+        transitive = true
+    }
+//    compileOnly 'org.projectlombok:lombok'
+    //developmentOnly "org.springframework.boot:spring-boot-devtools:${SPRING_BOOT_VERSION}"
+    runtimeOnly ("mysql:mysql-connector-java:${MYSQL_VERSION}"){
+        transitive = true
+    }
+    annotationProcessor ("org.springframework.boot:spring-boot-configuration-processor:${SPRING_BOOT_VERSION}"){
+        transitive = true
+    }
+//    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation("org.springframework.boot:spring-boot-starter-test:${SPRING_BOOT_VERSION}") {
+        transitive = true
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+        exclude group: 'junit', module: 'junit'
+        exclude group: 'org.junit.jupiter', module: 'junit-jupiter-api'
+    }
+}

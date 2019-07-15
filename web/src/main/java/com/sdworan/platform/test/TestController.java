@@ -41,6 +41,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import dao.DaoTest;
+
 /**
  * Copyright (C), 2002-2019, 山东沃然网络科技有限公司
  * FileName: TestController
@@ -56,7 +58,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/test")
 public class TestController {
 
-    @GetMapping("/get")
+//    @GetMapping("/get")
     public String get(){
         return "123";
     }

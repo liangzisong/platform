@@ -1,0 +1,9 @@
+plugins {
+    id 'java'
+}
+
+dependencies {
+    compileOnly 'org.projectlombok:lombok:+'
+    annotationProcessor 'org.projectlombok:lombok:+'
+    implementation "org.apache.commons:commons-lang3:${COMMONS_LANG3_VERSION}"
+}

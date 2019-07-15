@@ -1,35 +1,77 @@
 plugins {
 	id 'org.springframework.boot' version '2.2.0.M4'
-	id 'java'
 }
+
 allprojects {
 	apply plugin: 'idea'
+	apply plugin: 'java'
+	apply plugin: 'io.spring.dependency-management'
+	sourceCompatibility = 1.8
+
+	tasks.withType(JavaCompile) {
+		options.encoding = "UTF-8"
+	}
 }
+
+//setMainClassName 'com.sdworan.platform.PlatformApplication'
+
+
 subprojects {
+
+	//修改默认解决策略   默认  jar包依赖有冲突时会使用最新的版本
+	configurations.all{
+		//transitive = true    // 关闭依赖传递
+		resolutionStrategy{
+			failOnVersionConflict()
+			force 'org.slf4j:slf4j-api:+'
+			force "org.springframework.boot:spring-boot-starter:${SPRING_BOOT_VERSION}"
+			force "org.springframework.boot:spring-boot-autoconfigure:${SPRING_BOOT_VERSION}"
+			force "org.springframework:spring-core:${SPRING_VERSION}"
+			force "org.springframework:spring-tx:${SPRING_VERSION}"
+			force "org.springframework:spring-beans:${SPRING_VERSION}"
+
+		}
+	}
+	
+	repositories {
+		//先使用本机仓库
+		mavenLocal()
+		mavenCentral()
+		maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+		maven { url 'https://repo.spring.io/snapshot' }
+		maven { url 'https://repo.spring.io/milestone' }
+	}
 	dependencies {
-        //classpath 'com.android.tools.build:gradle:5.4.1'
-		//implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+		//jackson开始
+		implementation "com.fasterxml.jackson.core:jackson-databind:${JACKSON_VERSION}"
+		implementation "com.fasterxml.jackson.core:jackson-core:${JACKSON_VERSION}"
+		implementation "com.fasterxml.jackson.core:jackson-annotations:${JACKSON_VERSION}"
+		//jackson结束
 
 	}
+
+	test {
+		//使用gradle的junit
+		useJUnitPlatform()
+	}
+
+
+	configurations {
+		developmentOnly
+		runtimeClasspath {
+			extendsFrom developmentOnly
+		}
+		compileOnly {
+			extendsFrom annotationProcessor
+		}
+	}
+
 }
 
-apply plugin: 'io.spring.dependency-management'
-
-group = 'com.sdworan'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '1.8'
-
-configurations {
-	developmentOnly
-	runtimeClasspath {
-		extendsFrom developmentOnly
-	}
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
-}
 
 repositories {
+	//先使用本机仓库
+	mavenLocal()
 	mavenCentral()
 	maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
 	maven { url 'https://repo.spring.io/snapshot' }
@@ -37,25 +79,26 @@ repositories {
 }
 dependencies {
 
-	implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
-	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
-	//先禁用掉security
-	//implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.0.1'
-	compileOnly 'org.projectlombok:lombok'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	runtimeOnly 'mysql:mysql-connector-java'
-	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation('org.springframework.boot:spring-boot-starter-test') {
-		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-		exclude group: 'junit', module: 'junit'
-	}
-	testImplementation 'org.springframework.security:spring-security-test'
+//	implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
+//	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+//	//先禁用掉security
+//	//implementation 'org.springframework.boot:spring-boot-starter-security'
+//	implementation 'org.springframework.boot:spring-boot-starter-web'
+//	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.0.1'
+//	compileOnly 'org.projectlombok:lombok'
+//	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+//	runtimeOnly 'mysql:mysql-connector-java'
+//	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+//	annotationProcessor 'org.projectlombok:lombok'
+//	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+//		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+//		exclude group: 'junit', module: 'junit'
+//	}
+//	testImplementation 'org.springframework.security:spring-security-test'
 }
 
 test {
+	//使用gradle的junit
 	useJUnitPlatform()
 }
 

@@ -1,4 +1,4 @@
-package aa;//
+package pojo;//
 //
 //
 //
@@ -39,23 +39,15 @@ package aa;//
 
 /**
  * Copyright (C), 2002-2019, 山东沃然网络科技有限公司
- * FileName: TestA
+ * FileName: PojoTest
  * <p>
  * Description:
  *
  * @author 如果这段代码非常棒就是梁子松写的
  * 如果这代码挺差劲那么我也不知道是谁写的
  * @version 1.0.0
- * @create 2019/7/13 16:47
+ * @create 2019/7/15 11:27
  */
-
-public class TestA {
-
-
-    public String getA(){
-
-//        PlatformApp
-        return "A";
-    }
+public class PojoTest {
 
 }
